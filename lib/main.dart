@@ -240,7 +240,8 @@ class _MyHomePageState extends State<MyHomePage> {
               child: ListView.builder(
                   controller: _scrollBottomBarController,
                   padding: const EdgeInsets.all(0.0),
-                  physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+                  physics: const AlwaysScrollableScrollPhysics(
+                      parent: BouncingScrollPhysics()),
                   shrinkWrap: true,
                   cacheExtent: 50.0,
                   itemCount: 200,
@@ -253,20 +254,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: ListTile(
                           selectedTileColor: const Color(0xFF337A6F),
                           leading: GestureDetector(
-                            child: CircleAvatar(
+                            child: const CircleAvatar(
                               backgroundImage:
                                   AssetImage('assets/logo/logo2.jpg'),
                             ),
                           ),
-                          title: Text(
+                          title: const Text(
                             "Maembe",
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              // fontWeight: FontWeight.bold,
-                            ),
+                            style: TextStyle(
+                                // fontWeight: FontWeight.bold,
+                                ),
                           ),
                           subtitle: Row(children: [
-                            Text("23"),
+                            const Text("23"),
                             const SizedBox(
                               width: 10.0,
                             ),
@@ -322,14 +323,13 @@ class _MyHomePageState extends State<MyHomePage> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8.0),
                                 child: Text(
                                   // "Tsh ${myFormat.format(_item.sale_price)}",
 
                                   'Tsh 13,000',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       // fontWeight: FontWeight.bold,
                                       color: Colors.green),
                                 ),
@@ -338,7 +338,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               //         .read<CartDisplay>()
                               //         .getItemList
                               //         .any((element) => element.id == _item.id)
-                              false
+                              5 == 9
                                   ? SizedBox(
                                       // height: frameHeight / 26,
                                       // width: frameWidth / 2.8,
@@ -363,15 +363,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 size: 10.0,
                                               ),
                                             ])),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(
                                               horizontal: 3.0),
                                           child: Text(
                                               // context
                                               //     .watch<CartDisplay>()
                                               //     .getSingleItem(_item.id),
                                               'hello',
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                   fontSize: 18.0,
                                                   fontWeight: FontWeight.w500,
                                                   color: Colors.green)),
@@ -396,7 +396,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                       ],
                                     ))
                                   : SizedBox(
-                                      height: MediaQuery.of(context).size.height/30.0,
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              30.0,
                                       // width: frameWidth / 3.0,
                                       child: FloatingActionButton.extended(
                                           elevation: 1.0,
