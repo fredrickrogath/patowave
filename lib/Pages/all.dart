@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class All extends StatefulWidget {
   final int index;
@@ -9,6 +10,8 @@ class All extends StatefulWidget {
 }
 
 class _AllState extends State<All> {
+  String _scanBarcode = 'Unknown';
+  
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -28,56 +31,59 @@ class _AllState extends State<All> {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(),
           ),
-          subtitle: Row(children: [
-            const Text("23"),
-            const SizedBox(
-              width: 10.0,
-            ),
-            if (2 == 0)
-              Row(children: const [
-                Text(
-                  'Out of stock',
-                  style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontSize: 13.0,
-                      color: Color(0xFFe63946)),
-                ),
-                SizedBox(
-                  width: 3.0,
-                ),
-                Icon(Icons.warning_amber_outlined,
-                    size: 15.0, color: Color(0xFFe63946))
-              ])
-            else if (2 > 0)
-              Row(children: const [
-                Text(
-                  'Attention',
-                  style: TextStyle(
-                      fontSize: 13.0,
-                      fontStyle: FontStyle.italic,
-                      color: Color(0xFFff9e00)),
-                ),
-                SizedBox(
-                  width: 3.0,
-                ),
-                Icon(Icons.warning_amber_outlined,
-                    size: 15.0, color: Color(0xFFff9e00))
-              ])
-            else if (2 > 20)
-              Row(children: const [
-                Text(
-                  'Availlable',
-                  style: TextStyle(
-                      fontSize: 13.0,
-                      fontStyle: FontStyle.italic,
-                      color: Color(0xFF337A6F)),
-                ),
-                SizedBox(
-                  width: 3.0,
-                ),
-                Icon(Icons.circle, size: 15.0, color: Color(0xFF337A6F))
-              ])
-          ]),
+          subtitle: Padding(
+            padding: const EdgeInsets.only(top:12.0),
+            child: Row(children: [
+              const Text("Quantity  23", style: TextStyle(fontStyle: FontStyle.italic,)),
+              const SizedBox(
+                width: 10.0,
+              ),
+              if (2 == 0)
+                Row(children: const [
+                  Text(
+                    'Out of stock',
+                    style: TextStyle(
+                        fontStyle: FontStyle.italic,
+                        fontSize: 13.0,
+                        color: Color(0xFFe63946)),
+                  ),
+                  SizedBox(
+                    width: 3.0,
+                  ),
+                  Icon(Icons.warning_amber_outlined,
+                      size: 15.0, color: Color(0xFFe63946))
+                ])
+              else if (2 > 0)
+                Row(children: const [
+                  // Text(
+                  //   'Attention',
+                  //   style: TextStyle(
+                  //       fontSize: 13.0,
+                  //       fontStyle: FontStyle.italic,
+                  //       color: Color(0xFFff9e00)),
+                  // ),
+                  SizedBox(
+                    width: 3.0,
+                  ),
+                  Icon(Icons.warning_amber_outlined,
+                      size: 15.0, color: Color(0xFFff9e00))
+                ])
+              else if (2 > 20)
+                Row(children: const [
+                  Text(
+                    'Availlable',
+                    style: TextStyle(
+                        fontSize: 13.0,
+                        fontStyle: FontStyle.italic,
+                        color: Color(0xFF337A6F)),
+                  ),
+                  SizedBox(
+                    width: 3.0,
+                  ),
+                  Icon(Icons.circle, size: 15.0, color: Color(0xFF337A6F))
+                ])
+            ]),
+          ),
           trailing: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

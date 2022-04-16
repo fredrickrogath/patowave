@@ -4,7 +4,9 @@ import 'package:flutter/rendering.dart';
 import 'package:patowave/Pages/all.dart';
 import 'package:patowave/Pages/products.dart';
 import 'package:patowave/Pages/services.dart';
+import 'package:flutter/services.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 void main() {
   runApp(const MyApp());
@@ -48,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isScrollingDown = false;
   bool _show = true;
   double bottomBarHeight = 50; // set bottom bar height
+  String _scanBarcode = 'Unknown';
   // final double _bottomBarOffset = 0;
   // final double _iconSize = 20;
 
@@ -122,20 +125,69 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  Widget body() {
-    return ListView.builder(
-        // the number of items in the list
-        itemCount: 200,
-        controller: _scrollBottomBarController,
+  // Widget body() {
+  //   return ListView.builder(
+  //       // the number of items in the list
+  //       itemCount: 200,
+  //       controller: _scrollBottomBarController,
 
-        // display each item of the product list
-        itemBuilder: (context, index) {
-          return Card(
-              // In many cases, the key isn't mandatory
-              key: UniqueKey(),
-              child: Padding(
-                  padding: const EdgeInsets.all(10), child: Text('$index')));
-        });
+  //       // display each item of the product list
+  //       itemBuilder: (context, index) {
+  //         return Card(
+  //             // In many cases, the key isn't mandatory
+  //             key: UniqueKey(),
+  //             child: Padding(
+  //                 padding: const EdgeInsets.all(10), child: Text('$index')));
+  //       });
+  // }
+
+  Future<void> startBarcodeScanStream() async {
+    FlutterBarcodeScanner.getBarcodeStreamReceiver(
+            '#ff6666', 'Cancel', true, ScanMode.BARCODE)!
+        .listen((barcode) => print(barcode));
+  }
+
+  Future<void> scanQR() async {
+    String barcodeScanRes;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.QR);
+      print(barcodeScanRes);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _scanBarcode = barcodeScanRes;
+    });
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> scanBarcodeNormal() async {
+    String barcodeScanRes;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      print(barcodeScanRes);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _scanBarcode = barcodeScanRes;
+    });
   }
 
   @override
@@ -195,7 +247,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: Text('Insights'),
                             ),
                             Tab(
-                              child: Text('Report'),
+                              child: Text('Units'),
                             ),
                           ]),
                     ),
@@ -303,182 +355,181 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget allTab() => Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 58.0),
+            child: ListView.builder(
+                controller: _scrollBottomBarController,
+                padding: const EdgeInsets.all(0.0),
+                physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics()),
+                shrinkWrap: true,
+                cacheExtent: 50.0,
+                itemCount: 200,
+                itemBuilder: (context, index) {
+                  return All(index: index);
+                }),
+          ),
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Row(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 58.0),
-                  child: ListView.builder(
-                      controller: _scrollBottomBarController,
-                      padding: const EdgeInsets.all(0.0),
-                      physics: const AlwaysScrollableScrollPhysics(
-                          parent: BouncingScrollPhysics()),
-                      shrinkWrap: true,
-                      cacheExtent: 50.0,
-                      itemCount: 200,
-                      itemBuilder: (context, index) {
-                        return All(index: index);
-                      }),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.4,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            // color: Colors.white,
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Center(
-                          child: TextField(
-                            decoration: InputDecoration(
-                                prefixIcon: const Icon(Icons.search),
-                                suffixIcon: IconButton(
-                                  icon: const Icon(Icons.clear, color: Colors.grey),
-                                  onPressed: () {
-                                    /* Clear the search field */
-                                  },
-                                ),
-                                hintText: 'Search...',
-                                border: InputBorder.none),
+                  width: MediaQuery.of(context).size.width / 1.4,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      // color: Colors.white,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Center(
+                    child: TextField(
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.clear, color: Colors.grey),
+                            onPressed: () {
+                              /* Clear the search field */
+                            },
                           ),
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(CupertinoIcons.add),
-                        color: Colors.grey,
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: const Icon(CupertinoIcons.barcode_viewfinder),
-                        color: Colors.grey,
-                        onPressed: () {},
-                      ),
-                    ],
+                          hintText: 'Search...',
+                          border: InputBorder.none),
+                    ),
                   ),
+                ),
+                IconButton(
+                  icon: const Icon(CupertinoIcons.add),
+                  color: Colors.grey,
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: const Icon(CupertinoIcons.barcode_viewfinder),
+                  color: Colors.grey,
+                  onPressed: () {
+                    scanBarcodeNormal();
+                  },
                 ),
               ],
-            );
+            ),
+          ),
+        ],
+      );
 
-
-             Widget productsTab() => Stack(
+  Widget productsTab() => Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 58.0),
+            child: ListView.builder(
+                controller: _scrollBottomBarController,
+                padding: const EdgeInsets.all(0.0),
+                physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics()),
+                shrinkWrap: true,
+                cacheExtent: 50.0,
+                itemCount: 200,
+                itemBuilder: (context, index) {
+                  return Products(index: index);
+                }),
+          ),
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Row(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 58.0),
-                  child: ListView.builder(
-                      controller: _scrollBottomBarController,
-                      padding: const EdgeInsets.all(0.0),
-                      physics: const AlwaysScrollableScrollPhysics(
-                          parent: BouncingScrollPhysics()),
-                      shrinkWrap: true,
-                      cacheExtent: 50.0,
-                      itemCount: 200,
-                      itemBuilder: (context, index) {
-                        return Products(index: index);
-                      }),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.4,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            // color: Colors.white,
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Center(
-                          child: TextField(
-                            decoration: InputDecoration(
-                                prefixIcon: const Icon(Icons.search),
-                                suffixIcon: IconButton(
-                                  icon: const Icon(Icons.clear, color: Colors.grey),
-                                  onPressed: () {
-                                    /* Clear the search field */
-                                  },
-                                ),
-                                hintText: 'Search...',
-                                border: InputBorder.none),
+                  width: MediaQuery.of(context).size.width / 1.4,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      // color: Colors.white,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Center(
+                    child: TextField(
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.clear, color: Colors.grey),
+                            onPressed: () {
+                              /* Clear the search field */
+                            },
                           ),
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(CupertinoIcons.add),
-                        color: Colors.grey,
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: const Icon(CupertinoIcons.barcode_viewfinder),
-                        color: Colors.grey,
-                        onPressed: () {},
-                      ),
-                    ],
+                          hintText: 'Search...',
+                          border: InputBorder.none),
+                    ),
                   ),
+                ),
+                IconButton(
+                  icon: const Icon(CupertinoIcons.add),
+                  color: Colors.grey,
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: const Icon(CupertinoIcons.barcode_viewfinder),
+                  color: Colors.grey,
+                  onPressed: () {},
                 ),
               ],
-            );
+            ),
+          ),
+        ],
+      );
 
-             Widget servicesTab() => Stack(
+  Widget servicesTab() => Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 58.0),
+            child: ListView.builder(
+                controller: _scrollBottomBarController,
+                padding: const EdgeInsets.all(0.0),
+                physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics()),
+                shrinkWrap: true,
+                cacheExtent: 50.0,
+                itemCount: 200,
+                itemBuilder: (context, index) {
+                  return Services(index: index);
+                }),
+          ),
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Row(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(top: 58.0),
-                  child: ListView.builder(
-                      controller: _scrollBottomBarController,
-                      padding: const EdgeInsets.all(0.0),
-                      physics: const AlwaysScrollableScrollPhysics(
-                          parent: BouncingScrollPhysics()),
-                      shrinkWrap: true,
-                      cacheExtent: 50.0,
-                      itemCount: 200,
-                      itemBuilder: (context, index) {
-                        return Services(index: index);
-                      }),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.4,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            // color: Colors.white,
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Center(
-                          child: TextField(
-                            decoration: InputDecoration(
-                                prefixIcon: const Icon(Icons.search),
-                                suffixIcon: IconButton(
-                                  icon: const Icon(Icons.clear, color: Colors.grey),
-                                  onPressed: () {
-                                    /* Clear the search field */
-                                  },
-                                ),
-                                hintText: 'Search...',
-                                border: InputBorder.none),
+                  width: MediaQuery.of(context).size.width / 1.4,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      // color: Colors.white,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Center(
+                    child: TextField(
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.clear, color: Colors.grey),
+                            onPressed: () {
+                              /* Clear the search field */
+                            },
                           ),
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(CupertinoIcons.add),
-                        color: Colors.grey,
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: const Icon(CupertinoIcons.barcode_viewfinder),
-                        color: Colors.grey,
-                        onPressed: () {},
-                      ),
-                    ],
+                          hintText: 'Search...',
+                          border: InputBorder.none),
+                    ),
                   ),
+                ),
+                IconButton(
+                  icon: const Icon(CupertinoIcons.add),
+                  color: Colors.grey,
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: const Icon(CupertinoIcons.barcode_viewfinder),
+                  color: Colors.grey,
+                  onPressed: () {},
                 ),
               ],
-            );
-
-
+            ),
+          ),
+        ],
+      );
 }
