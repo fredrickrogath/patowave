@@ -129,7 +129,7 @@ class _ProductsState extends State<Products> {
                   : SizedBox(
                       height: MediaQuery.of(context).size.height / 30.0,
                       child: FloatingActionButton.extended(
-                          elevation: 1.0,
+                          elevation: 0.0,
                           foregroundColor: Colors.white,
                           backgroundColor: const Color(0xFF337A6F),
                           onPressed: () {},

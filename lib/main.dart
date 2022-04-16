@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:patowave/Pages/all.dart';
+import 'package:patowave/Pages/products.dart';
+import 'package:patowave/Pages/services.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
@@ -239,70 +241,9 @@ class _MyHomePageState extends State<MyHomePage> {
           physics: const AlwaysScrollableScrollPhysics(
               parent: BouncingScrollPhysics()),
           children: [
-            Stack(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 55.0),
-                  child: ListView.builder(
-                      controller: _scrollBottomBarController,
-                      padding: const EdgeInsets.all(0.0),
-                      physics: const AlwaysScrollableScrollPhysics(
-                          parent: BouncingScrollPhysics()),
-                      shrinkWrap: true,
-                      cacheExtent: 50.0,
-                      itemCount: 200,
-                      itemBuilder: (context, index) {
-                        return All(index: index);
-                      }),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1.4,
-                        height: 50,
-                        decoration: BoxDecoration(
-                            // color: Colors.white,
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Center(
-                          child: TextField(
-                            decoration: InputDecoration(
-                                prefixIcon: const Icon(Icons.search),
-                                suffixIcon: IconButton(
-                                  icon: const Icon(Icons.clear),
-                                  onPressed: () {
-                                    /* Clear the search field */
-                                  },
-                                ),
-                                hintText: 'Search...',
-                                border: InputBorder.none),
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(CupertinoIcons.add),
-                        color: Colors.grey,
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: const Icon(CupertinoIcons.barcode_viewfinder),
-                        color: Colors.grey,
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            const Center(
-              child: Text('Tab 2'),
-            ),
-            const Center(
-              child: Text('Tab 3'),
-            ),
+            allTab(),
+            productsTab(),
+            servicesTab(),
             const Center(
               child: Text('Tab 4'),
             ),
@@ -361,40 +302,183 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  // Widget allTab() => SingleChildScrollView(
-  //   child: Column(children: [
-  //     // Container(
-  //     //   width: double.infinity,
-  //     //   height: 40,
-  //     //   decoration: BoxDecoration(
-  //     //       color: Colors.white,
-  //     //       borderRadius: BorderRadius.circular(5)),
-  //     //   child: Center(
-  //     //     child: TextField(
-  //     //       decoration: InputDecoration(
-  //     //           prefixIcon: Icon(Icons.search),
-  //     //           suffixIcon: IconButton(
-  //     //             icon: Icon(Icons.clear),
-  //     //             onPressed: () {
-  //     //               /* Clear the search field */
-  //     //             },
-  //     //           ),
-  //     //           hintText: 'Search...',
-  //     //           border: InputBorder.none),
-  //     //     ),
-  //     //   ),
-  //     // ),
-  //     ListView.builder(
-  //         controller: _scrollBottomBarController,
-  //         padding: const EdgeInsets.all(0.0),
-  //         physics: const AlwaysScrollableScrollPhysics(
-  //             parent: BouncingScrollPhysics()),
-  //         shrinkWrap: true,
-  //         cacheExtent: 50.0,
-  //         itemCount: 100,
-  //         itemBuilder: (context, index) {
-  //           return Text('$index');
-  //         }),
-  //   ]),
-  // );
+  Widget allTab() => Stack(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 58.0),
+                  child: ListView.builder(
+                      controller: _scrollBottomBarController,
+                      padding: const EdgeInsets.all(0.0),
+                      physics: const AlwaysScrollableScrollPhysics(
+                          parent: BouncingScrollPhysics()),
+                      shrinkWrap: true,
+                      cacheExtent: 50.0,
+                      itemCount: 200,
+                      itemBuilder: (context, index) {
+                        return All(index: index);
+                      }),
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.4,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            // color: Colors.white,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Center(
+                          child: TextField(
+                            decoration: InputDecoration(
+                                prefixIcon: const Icon(Icons.search),
+                                suffixIcon: IconButton(
+                                  icon: const Icon(Icons.clear, color: Colors.grey),
+                                  onPressed: () {
+                                    /* Clear the search field */
+                                  },
+                                ),
+                                hintText: 'Search...',
+                                border: InputBorder.none),
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(CupertinoIcons.add),
+                        color: Colors.grey,
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: const Icon(CupertinoIcons.barcode_viewfinder),
+                        color: Colors.grey,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+
+
+             Widget productsTab() => Stack(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 58.0),
+                  child: ListView.builder(
+                      controller: _scrollBottomBarController,
+                      padding: const EdgeInsets.all(0.0),
+                      physics: const AlwaysScrollableScrollPhysics(
+                          parent: BouncingScrollPhysics()),
+                      shrinkWrap: true,
+                      cacheExtent: 50.0,
+                      itemCount: 200,
+                      itemBuilder: (context, index) {
+                        return Products(index: index);
+                      }),
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.4,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            // color: Colors.white,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Center(
+                          child: TextField(
+                            decoration: InputDecoration(
+                                prefixIcon: const Icon(Icons.search),
+                                suffixIcon: IconButton(
+                                  icon: const Icon(Icons.clear, color: Colors.grey),
+                                  onPressed: () {
+                                    /* Clear the search field */
+                                  },
+                                ),
+                                hintText: 'Search...',
+                                border: InputBorder.none),
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(CupertinoIcons.add),
+                        color: Colors.grey,
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: const Icon(CupertinoIcons.barcode_viewfinder),
+                        color: Colors.grey,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+
+             Widget servicesTab() => Stack(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 58.0),
+                  child: ListView.builder(
+                      controller: _scrollBottomBarController,
+                      padding: const EdgeInsets.all(0.0),
+                      physics: const AlwaysScrollableScrollPhysics(
+                          parent: BouncingScrollPhysics()),
+                      shrinkWrap: true,
+                      cacheExtent: 50.0,
+                      itemCount: 200,
+                      itemBuilder: (context, index) {
+                        return Services(index: index);
+                      }),
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.4,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            // color: Colors.white,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Center(
+                          child: TextField(
+                            decoration: InputDecoration(
+                                prefixIcon: const Icon(Icons.search),
+                                suffixIcon: IconButton(
+                                  icon: const Icon(Icons.clear, color: Colors.grey),
+                                  onPressed: () {
+                                    /* Clear the search field */
+                                  },
+                                ),
+                                hintText: 'Search...',
+                                border: InputBorder.none),
+                          ),
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(CupertinoIcons.add),
+                        color: Colors.grey,
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: const Icon(CupertinoIcons.barcode_viewfinder),
+                        color: Colors.grey,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            );
+
+
 }
