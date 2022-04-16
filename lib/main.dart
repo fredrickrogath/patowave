@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:patowave/Pages/all.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
@@ -189,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: Text('Services'),
                             ),
                             Tab(
-                              child: Text('Sales'),
+                              child: Text('Insights'),
                             ),
                             Tab(
                               child: Text('Report'),
@@ -235,209 +236,66 @@ class _MyHomePageState extends State<MyHomePage> {
                 preferredSize: const Size(0.0, 0.0),
               ),
         body: TabBarView(
+          physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics()),
           children: [
-            Center(
-              child: ListView.builder(
-                  controller: _scrollBottomBarController,
-                  padding: const EdgeInsets.all(0.0),
-                  physics: const AlwaysScrollableScrollPhysics(
-                      parent: BouncingScrollPhysics()),
-                  shrinkWrap: true,
-                  cacheExtent: 50.0,
-                  itemCount: 200,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      elevation: 1.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+            Stack(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 55.0),
+                  child: ListView.builder(
+                      controller: _scrollBottomBarController,
+                      padding: const EdgeInsets.all(0.0),
+                      physics: const AlwaysScrollableScrollPhysics(
+                          parent: BouncingScrollPhysics()),
+                      shrinkWrap: true,
+                      cacheExtent: 50.0,
+                      itemCount: 200,
+                      itemBuilder: (context, index) {
+                        return All(index: index);
+                      }),
+                ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.4,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            // color: Colors.white,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Center(
+                          child: TextField(
+                            decoration: InputDecoration(
+                                prefixIcon: const Icon(Icons.search),
+                                suffixIcon: IconButton(
+                                  icon: const Icon(Icons.clear),
+                                  onPressed: () {
+                                    /* Clear the search field */
+                                  },
+                                ),
+                                hintText: 'Search...',
+                                border: InputBorder.none),
+                          ),
+                        ),
                       ),
-                      child: ListTile(
-                          selectedTileColor: const Color(0xFF337A6F),
-                          leading: GestureDetector(
-                            child: const CircleAvatar(
-                              backgroundImage:
-                                  AssetImage('assets/logo/logo2.jpg'),
-                            ),
-                          ),
-                          title: const Text(
-                            "Maembe",
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                // fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          subtitle: Row(children: [
-                            const Text("23"),
-                            const SizedBox(
-                              width: 10.0,
-                            ),
-                            if (2 == 0)
-                              Row(children: const [
-                                Text(
-                                  'Out of stock',
-                                  style: TextStyle(
-                                      fontStyle: FontStyle.italic,
-                                      fontSize: 13.0,
-                                      color: Color(0xFFe63946)),
-                                ),
-                                SizedBox(
-                                  width: 3.0,
-                                ),
-                                Icon(Icons.warning_amber_outlined,
-                                    size: 15.0, color: Color(0xFFe63946))
-                              ])
-                            else if (2 > 0)
-                              Row(children: const [
-                                Text(
-                                  'Attention',
-                                  style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontStyle: FontStyle.italic,
-                                      color: Color(0xFFff9e00)),
-                                ),
-                                SizedBox(
-                                  width: 3.0,
-                                ),
-                                Icon(Icons.warning_amber_outlined,
-                                    size: 15.0, color: Color(0xFFff9e00))
-                              ])
-                            else if (2 > 20)
-                              Row(children: const [
-                                Text(
-                                  'Availlable',
-                                  style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontStyle: FontStyle.italic,
-                                      color: Color(0xFF337A6F)),
-                                ),
-                                SizedBox(
-                                  width: 3.0,
-                                ),
-                                Icon(Icons.circle,
-                                    size: 15.0, color: Color(0xFF337A6F))
-                              ])
-                            // const Icon(Icons.circle,
-                            //     size: 15.0, color: Color(0xFF337A6F))
-                          ]),
-                          trailing: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                                child: Text(
-                                  // "Tsh ${myFormat.format(_item.sale_price)}",
-
-                                  'Tsh 13,000',
-                                  style: TextStyle(
-                                      // fontWeight: FontWeight.bold,
-                                      color: Colors.green),
-                                ),
-                              ),
-                              // context
-                              //         .read<CartDisplay>()
-                              //         .getItemList
-                              //         .any((element) => element.id == _item.id)
-                              5 == 9
-                                  ? SizedBox(
-                                      // height: frameHeight / 26,
-                                      // width: frameWidth / 2.8,
-                                      child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        FloatingActionButton.extended(
-                                            elevation: 1.0,
-                                            foregroundColor: Colors.white,
-                                            backgroundColor:
-                                                const Color(0xFF337A6F),
-                                            onPressed: () {
-                                              // context
-                                              //     .read<CartDisplay>()
-                                              //     .updateItemCount(
-                                              //         _item.id, 'remove');
-                                            },
-                                            label: Row(children: const [
-                                              Icon(
-                                                Icons.remove,
-                                                size: 10.0,
-                                              ),
-                                            ])),
-                                        const Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 3.0),
-                                          child: Text(
-                                              // context
-                                              //     .watch<CartDisplay>()
-                                              //     .getSingleItem(_item.id),
-                                              'hello',
-                                              style: TextStyle(
-                                                  fontSize: 18.0,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.green)),
-                                        ),
-                                        FloatingActionButton.extended(
-                                            elevation: 1.0,
-                                            foregroundColor: Colors.white,
-                                            backgroundColor:
-                                                const Color(0xFF337A6F),
-                                            onPressed: () {
-                                              // context
-                                              //     .read<CartDisplay>()
-                                              //     .updateItemCount(
-                                              //         _item.id, 'add');
-                                            },
-                                            label: Row(children: const [
-                                              Icon(
-                                                Icons.add,
-                                                size: 10.0,
-                                              ),
-                                            ])),
-                                      ],
-                                    ))
-                                  : SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              30.0,
-                                      // width: frameWidth / 3.0,
-                                      child: FloatingActionButton.extended(
-                                          elevation: 1.0,
-                                          foregroundColor: Colors.white,
-                                          backgroundColor:
-                                              const Color(0xFF337A6F),
-                                          onPressed: () {
-                                            // final isAdded = context
-                                            //     .read<CartDisplay>()
-                                            //     .getItemList
-                                            //     .any((element) => element.id == 16);
-
-                                            // isAdded == true
-                                            //     ? context
-                                            //         .read<CartDisplay>()
-                                            //         .getItemList
-                                            //         .firstWhere((element) =>
-                                            //             element.count++)
-
-                                            // context.read<CartDisplay>().increment();
-
-                                            // addedToCart.add(_item.id);
-                                          },
-                                          label: Row(children: const [
-                                            // Icon(
-                                            //   Icons.add_shopping_cart,
-                                            //   size: 22.0,
-                                            // ),
-                                            Text('Add to sale',
-                                                style: TextStyle(
-                                                    // fontWeight: FontWeight.bold,
-                                                    fontSize: 13.0,
-                                                    color: Colors.white))
-                                          ])),
-                                    )
-                            ],
-                          )),
-                    );
-                  }),
+                      IconButton(
+                        icon: const Icon(CupertinoIcons.add),
+                        color: Colors.grey,
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: const Icon(CupertinoIcons.barcode_viewfinder),
+                        color: Colors.grey,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
             const Center(
               child: Text('Tab 2'),
@@ -502,4 +360,41 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+  // Widget allTab() => SingleChildScrollView(
+  //   child: Column(children: [
+  //     // Container(
+  //     //   width: double.infinity,
+  //     //   height: 40,
+  //     //   decoration: BoxDecoration(
+  //     //       color: Colors.white,
+  //     //       borderRadius: BorderRadius.circular(5)),
+  //     //   child: Center(
+  //     //     child: TextField(
+  //     //       decoration: InputDecoration(
+  //     //           prefixIcon: Icon(Icons.search),
+  //     //           suffixIcon: IconButton(
+  //     //             icon: Icon(Icons.clear),
+  //     //             onPressed: () {
+  //     //               /* Clear the search field */
+  //     //             },
+  //     //           ),
+  //     //           hintText: 'Search...',
+  //     //           border: InputBorder.none),
+  //     //     ),
+  //     //   ),
+  //     // ),
+  //     ListView.builder(
+  //         controller: _scrollBottomBarController,
+  //         padding: const EdgeInsets.all(0.0),
+  //         physics: const AlwaysScrollableScrollPhysics(
+  //             parent: BouncingScrollPhysics()),
+  //         shrinkWrap: true,
+  //         cacheExtent: 50.0,
+  //         itemCount: 100,
+  //         itemBuilder: (context, index) {
+  //           return Text('$index');
+  //         }),
+  //   ]),
+  // );
 }
