@@ -281,27 +281,8 @@ class _MyHomePageState extends State<MyHomePage> {
             allTab(),
             productsTab(),
             servicesTab(),
-            Container(
-                alignment: Alignment.center,
-                child: Flex(
-                    direction: Axis.vertical,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      ElevatedButton(
-                          onPressed: () => scanBarcodeNormal(),
-                          child: Text('Start barcode scan')),
-                      ElevatedButton(
-                          onPressed: () => scanQR(),
-                          child: Text('Start QR scan')),
-                      ElevatedButton(
-                          onPressed: () => startBarcodeScanStream(),
-                          child: Text('Start barcode scan stream')),
-                      Text('Scan result : $_scanBarcode\n',
-                          style: TextStyle(fontSize: 20))
-                    ])),
-            const Center(
-              child: Text('Tab 5'),
-            ),
+            insightsTab(),
+            unitsTab(),
           ],
         ),
         floatingActionButton: _show
@@ -412,12 +393,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       // isCloseButton: false,
                       isButtonVisible: false,
                       isOverlayTapDismiss: false,
-                      descStyle: TextStyle(fontWeight: FontWeight.bold),
+                      descStyle: const TextStyle(fontWeight: FontWeight.bold),
                       // descTextAlign: TextAlign.center,
-                      animationDuration: Duration(milliseconds: 400),
+                      animationDuration: const Duration(milliseconds: 400),
                       alertBorder: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16.0),
-                        side: BorderSide(
+                        side: const BorderSide(
                           color: Colors.grey,
                         ),
                       ),
@@ -440,19 +421,19 @@ class _MyHomePageState extends State<MyHomePage> {
                                   children: <Widget>[
                                     TextButton(
                                         onPressed: () => scanQR(),
-                                        child: Text('QR Scan',
+                                        child: const Text('QR Scan',
                                             style:
                                                 TextStyle(color: Colors.grey))),
                                     TextButton(
                                         onPressed: () => scanBarcodeNormal(),
-                                        child: Text('Barcode Scan',
+                                        child: const Text('Barcode Scan',
                                             style:
                                                 TextStyle(color: Colors.grey))),
 
                                     TextButton(
                                         onPressed: () =>
                                             startBarcodeScanStream(),
-                                        child: Text('Barcode Scan Stream',
+                                        child: const Text('Barcode Scan Stream',
                                             style:
                                                 TextStyle(color: Colors.grey))),
                                     // Text('Scan result : $_scanBarcode\n',
@@ -521,7 +502,62 @@ class _MyHomePageState extends State<MyHomePage> {
                 IconButton(
                   icon: const Icon(CupertinoIcons.barcode_viewfinder),
                   color: Colors.grey,
-                  onPressed: () {},
+                  onPressed: () {
+                    var alertStyle = AlertStyle(
+                      // animationType: AnimationType.grow,
+                      // isCloseButton: false,
+                      isButtonVisible: false,
+                      isOverlayTapDismiss: false,
+                      descStyle: const TextStyle(fontWeight: FontWeight.bold),
+                      // descTextAlign: TextAlign.center,
+                      animationDuration: const Duration(milliseconds: 400),
+                      alertBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0),
+                        side: const BorderSide(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      // titleStyle: TextStyle(
+                      //   color: const Color(0xFF24564F),
+                      // ),
+                      alertAlignment: Alignment.center,
+                    );
+                    Alert(
+                      context: context,
+                      style: alertStyle,
+                      title: "Select Scan Type",
+                      content: Column(
+                        children: <Widget>[
+                          Container(
+                              alignment: Alignment.center,
+                              child: Flex(
+                                  direction: Axis.vertical,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    TextButton(
+                                        onPressed: () => scanQR(),
+                                        child: const Text('QR Scan',
+                                            style:
+                                                TextStyle(color: Colors.grey))),
+                                    TextButton(
+                                        onPressed: () => scanBarcodeNormal(),
+                                        child: const Text('Barcode Scan',
+                                            style:
+                                                TextStyle(color: Colors.grey))),
+
+                                    TextButton(
+                                        onPressed: () =>
+                                            startBarcodeScanStream(),
+                                        child: const Text('Barcode Scan Stream',
+                                            style:
+                                                TextStyle(color: Colors.grey))),
+                                    // Text('Scan result : $_scanBarcode\n',
+                                    //     style: TextStyle(fontSize: 20))
+                                  ]))
+                        ],
+                      ),
+                    ).show();
+                  },
                 ),
               ],
             ),
@@ -543,6 +579,181 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemCount: 200,
                 itemBuilder: (context, index) {
                   return Services(index: index);
+                }),
+          ),
+          Card(
+            elevation: 0.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.4,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      // color: Colors.white,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Center(
+                    child: TextField(
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.clear, color: Colors.grey),
+                            onPressed: () {
+                              /* Clear the search field */
+                            },
+                          ),
+                          hintText: 'Search...',
+                          border: InputBorder.none),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(CupertinoIcons.add),
+                  color: Colors.grey,
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: const Icon(CupertinoIcons.barcode_viewfinder),
+                  color: Colors.grey,
+                  onPressed: () {
+                    var alertStyle = AlertStyle(
+                      // animationType: AnimationType.grow,
+                      // isCloseButton: false,
+                      isButtonVisible: false,
+                      isOverlayTapDismiss: false,
+                      descStyle: const TextStyle(fontWeight: FontWeight.bold),
+                      // descTextAlign: TextAlign.center,
+                      animationDuration: const Duration(milliseconds: 400),
+                      alertBorder: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0),
+                        side: const BorderSide(
+                          color: Colors.grey,
+                        ),
+                      ),
+                      // titleStyle: TextStyle(
+                      //   color: const Color(0xFF24564F),
+                      // ),
+                      alertAlignment: Alignment.center,
+                    );
+                    Alert(
+                      context: context,
+                      style: alertStyle,
+                      title: "Select Scan Type",
+                      content: Column(
+                        children: <Widget>[
+                          Container(
+                              alignment: Alignment.center,
+                              child: Flex(
+                                  direction: Axis.vertical,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    TextButton(
+                                        onPressed: () => scanQR(),
+                                        child: const Text('QR Scan',
+                                            style:
+                                                TextStyle(color: Colors.grey))),
+                                    TextButton(
+                                        onPressed: () => scanBarcodeNormal(),
+                                        child: const Text('Barcode Scan',
+                                            style:
+                                                TextStyle(color: Colors.grey))),
+
+                                    TextButton(
+                                        onPressed: () =>
+                                            startBarcodeScanStream(),
+                                        child: const Text('Barcode Scan Stream',
+                                            style:
+                                                TextStyle(color: Colors.grey))),
+                                    // Text('Scan result : $_scanBarcode\n',
+                                    //     style: TextStyle(fontSize: 20))
+                                  ]))
+                        ],
+                      ),
+                    ).show();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+
+  Widget insightsTab() => Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 58.0),
+            child: ListView.builder(
+                controller: _scrollBottomBarController,
+                padding: const EdgeInsets.all(0.0),
+                physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics()),
+                shrinkWrap: true,
+                cacheExtent: 50.0,
+                itemCount: 200,
+                itemBuilder: (context, index) {
+                  return Products(index: index);
+                }),
+          ),
+          Card(
+            elevation: 0.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.4,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      // color: Colors.white,
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Center(
+                    child: TextField(
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.search),
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.clear, color: Colors.grey),
+                            onPressed: () {
+                              /* Clear the search field */
+                            },
+                          ),
+                          hintText: 'Search...',
+                          border: InputBorder.none),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(CupertinoIcons.add),
+                  color: Colors.grey,
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: const Icon(CupertinoIcons.barcode_viewfinder),
+                  color: Colors.grey,
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
+        ],
+      );
+
+  Widget unitsTab() => Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 58.0),
+            child: ListView.builder(
+                controller: _scrollBottomBarController,
+                padding: const EdgeInsets.all(0.0),
+                physics: const AlwaysScrollableScrollPhysics(
+                    parent: BouncingScrollPhysics()),
+                shrinkWrap: true,
+                cacheExtent: 50.0,
+                itemCount: 200,
+                itemBuilder: (context, index) {
+                  return Products(index: index);
                 }),
           ),
           Card(
