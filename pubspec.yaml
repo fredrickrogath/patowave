@@ -39,6 +39,7 @@ dependencies:
   animations: ^2.0.2
   flutter_slidable: ^1.2.0
   flutter_barcode_scanner: ^2.0.0
+  rflutter_alert: ^2.0.4
 
 
 
