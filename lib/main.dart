@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -46,6 +47,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
   bool _showAppbar = true; //this is to show app bar
   final ScrollController _scrollBottomBarController =
       ScrollController(); // set controller on scrolling
@@ -80,6 +83,16 @@ class _MyHomePageState extends State<MyHomePage> {
   //     _selectedIndex = index;
   //   });
   // }
+
+  setDarkMode(value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('darkMode', value);
+  }
+
+  getdarkMode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    darkNotifier.value = prefs.getBool('darkMode')?? false;
+  }
 
   void showBottomBar() {
     setState(() {
@@ -117,6 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    getdarkMode();
     myScroll();
   }
 
@@ -195,12 +209,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 flexibleSpace: FlexibleSpaceBar(
                     centerTitle: true,
-                    // title:
-                    //  Text('Title',
-                    //     style: TextStyle(
-                    //       color: Colors.white,
-                    //       fontSize: 16.0,
-                    //     )),
                     background: Opacity(
                       opacity: 0.2,
                       child: Image.asset(
@@ -249,6 +257,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       onPressed: () {
                         isDark = !isDark;
                         darkNotifier.value = isDark;
+                        setDarkMode(isDark);
                         setState(() {});
                       },
                     ),
@@ -873,7 +882,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: const [
                               Text('Top Selling Items'),
-                              Icon(CupertinoIcons.text_alignright, color: Colors.grey)
+                              Icon(CupertinoIcons.text_alignright,
+                                  color: Colors.grey)
                             ],
                           ),
                         ),
