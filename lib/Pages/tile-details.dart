@@ -1,6 +1,10 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:getwidget/components/button/gf_button.dart';
+import 'package:getwidget/shape/gf_button_shape.dart';
+import 'package:getwidget/size/gf_size.dart';
+import 'package:getwidget/types/gf_button_type.dart';
 import 'package:patowave/image-viewer/view-image.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -53,7 +57,8 @@ class _TileDetailsState extends State<TileDetails> {
                     transitionDuration: const Duration(milliseconds: 100),
                     openBuilder: (context, action) {
                       return PhotoView(
-                          imageProvider: AssetImage("assets/logo/logo2.jpg"));
+                          imageProvider:
+                              const AssetImage("assets/logo/logo2.jpg"));
 
                       // ViewImage(image: 'assets/logo/logo2.jpg');
                     },
@@ -102,47 +107,73 @@ class _TileDetailsState extends State<TileDetails> {
                       'Cocacola zero',
                     ),
                     IconButton(
-                      color: Color(0XFFef233c),
+                      color: const Color(0XFFef233c),
                       icon: const Icon(CupertinoIcons.trash),
                       onPressed: () {
                         var alertStyle = AlertStyle(
-                        // animationType: AnimationType.grow,
-                        // isCloseButton: false,
-                        isButtonVisible: false,
-                        isOverlayTapDismiss: false,
-                        descStyle: const TextStyle(fontWeight: FontWeight.bold),
-                        // descTextAlign: TextAlign.center,
-                        animationDuration: const Duration(milliseconds: 400),
-                        alertBorder: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.0),
-                          side: const BorderSide(
-                            color: Colors.grey,
+                          // animationType: AnimationType.grow,
+                          // isCloseButton: false,
+                          isButtonVisible: false,
+                          isOverlayTapDismiss: false,
+                          descStyle:
+                              const TextStyle(fontWeight: FontWeight.bold),
+                          // descTextAlign: TextAlign.center,
+                          animationDuration: const Duration(milliseconds: 400),
+                          alertBorder: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                            side: const BorderSide(
+                              color: Colors.grey,
+                            ),
                           ),
-                        ),
-                        // titleStyle: TextStyle(
-                        //   color: const Color(0xFF24564F),
-                        // ),
-                        alertAlignment: Alignment.center,
-                      );
-                      Alert(
-                        context: context,
-                        style: alertStyle,
-                        title: "Alert",
-                        content: Column(
-                          children: <Widget>[
-                            Container(
-                                alignment: Alignment.center,
-                                child: Flex(
-                                    direction: Axis.vertical,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Text('Are sure you want to delete this item ?', style: TextStyle(fontSize: 17.0, )),
-                                      Text('Warning', style: TextStyle(color: Color(0XFFef233c), fontSize: 17.0)),
-                                      Text('All of these item information will be lost', style: TextStyle(fontSize: 17.0)),
-                                    ]))
-                          ],
-                        ),
-                      ).show();
+                          // titleStyle: TextStyle(
+                          //   color: const Color(0xFF24564F),
+                          // ),
+                          alertAlignment: Alignment.center,
+                        );
+                        Alert(
+                          context: context,
+                          style: alertStyle,
+                          type: AlertType.warning,
+                          // title: "Alert",
+                          content: Column(
+                            children: <Widget>[
+                              Container(
+                                  alignment: Alignment.center,
+                                  child: Flex(
+                                      direction: Axis.vertical,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 4.0),
+                                          child: Text(
+                                              'Are sure you want to delete this item ?.',
+                                              style: TextStyle(
+                                                fontSize: 14.0,
+                                              )),
+                                        ),
+                                        // Text('Warning', style: TextStyle(color: Color(0XFFef233c), fontSize: 17.0)),
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 4.0),
+                                          child: Text(
+                                              'All of these item information will be lost',
+                                              style: TextStyle(fontSize: 14.0)),
+                                        ),
+                                        GFButton(
+                                          onPressed: () {},
+                                          text: "Delete",
+                                          shape: GFButtonShape.square,
+                                          size: GFSize.MEDIUM,
+                                          fullWidthButton: true,
+                                          textStyle:
+                                              const TextStyle(fontSize: 18.0),
+                                        ),
+                                      ]))
+                            ],
+                          ),
+                        ).show();
                       },
                     ),
                   ],
@@ -159,12 +190,10 @@ class _TileDetailsState extends State<TileDetails> {
                       children: const [
                         Text(
                           'Tsh 34000 ',
-                         
                         ),
                         Text('/caton')
                       ],
                     ),
-                   
                   ],
                 ),
               ),
@@ -172,48 +201,47 @@ class _TileDetailsState extends State<TileDetails> {
                 height: 20.0,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal:8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const[
-                    Text('Barcode'),
-                    SizedBox(height: 5.0),
-                    Text('998658877676')
-                  ]),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const[
-                    Text('Purchase'),
-                    SizedBox(height: 5.0),
-                    Text('998658877676')
-                  ])
-                ]),
-              )
-,             const SizedBox(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text('Barcode'),
+                            SizedBox(height: 5.0),
+                            Text('998658877676')
+                          ]),
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text('Purchase'),
+                            SizedBox(height: 5.0),
+                            Text('998658877676')
+                          ])
+                    ]),
+              ),
+              const SizedBox(
                 height: 20.0,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal:8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const[
-                    Text('Details'),
-                    // SizedBox(height: 5.0),
-                    // Text('998658877676')
-                  ]),
-                  // Column(children: const[
-                  //   Text('Purchase'),
-                  //   Text('998658877676')
-                  // ])
-                ]),
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text('Details'),
+                            // SizedBox(height: 5.0),
+                            // Text('998658877676')
+                          ]),
+                      // Column(children: const[
+                      //   Text('Purchase'),
+                      //   Text('998658877676')
+                      // ])
+                    ]),
               )
-              
             ],
           ),
         ],
