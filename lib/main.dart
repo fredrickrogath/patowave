@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -48,15 +50,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   bool _showAppbar = true; //this is to show app bar
   final ScrollController _scrollBottomBarController =
       ScrollController(); // set controller on scrolling
   bool isScrollingDown = false;
   bool _show = true;
-  double bottomBarHeight = 50; // set bottom bar height
-  String _scanBarcode = 'Unknown';
+  double bottomBarHeight = 50;
+
+  int _selectedIndex = 0;
+  // String _scanBarcode = 'Unknown';
   // final double _bottomBarOffset = 0;
   // final double _iconSize = 20;
 
@@ -128,6 +132,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -145,7 +155,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> startBarcodeScanStream() async {
     FlutterBarcodeScanner.getBarcodeStreamReceiver(
             '#ff6666', 'Cancel', true, ScanMode.BARCODE)!
-        .listen((barcode) => print(barcode));
+        .listen((barcode) =>
+            // ignore: avoid_print
+            print(barcode));
   }
 
   Future<void> scanQR() async {
@@ -165,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (!mounted) return;
 
     setState(() {
-      _scanBarcode = barcodeScanRes;
+      // _scanBarcode = barcodeScanRes;
     });
   }
 
@@ -187,7 +199,7 @@ class _MyHomePageState extends State<MyHomePage> {
     if (!mounted) return;
 
     setState(() {
-      _scanBarcode = barcodeScanRes;
+      // _scanBarcode = barcodeScanRes;
     });
   }
 
@@ -296,52 +308,73 @@ class _MyHomePageState extends State<MyHomePage> {
             unitsTab(),
           ],
         ),
-        floatingActionButton: _show
-            ? SizedBox(
-                height: 50.0,
-                child: FloatingActionButton(
-                  onPressed: () {},
-                  child: const Icon(Icons.add),
-                  elevation: 4.0,
-                  backgroundColor: const Color(0xFF337A6F),
-                ),
-              )
-            : const SizedBox(height: 0.0),
-        bottomNavigationBar: BottomAppBar(
-          child: _show
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      child: IconButton(
-                        icon: const Icon(Icons.home),
-                        onPressed: () {},
-                      ),
-                    ),
-                    Expanded(
-                      child: IconButton(
-                        icon: const Icon(Icons.show_chart),
-                        onPressed: () {},
-                      ),
-                    ),
-                    const Expanded(child: Text('')),
-                    Expanded(
-                      child: IconButton(
-                        icon: const Icon(Icons.tab),
-                        onPressed: () {},
-                      ),
-                    ),
-                    Expanded(
-                      child: IconButton(
-                        icon: const Icon(Icons.settings),
-                        onPressed: () {},
-                      ),
-                    ),
-                  ],
-                )
-              : const SizedBox(height: 0.0),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        // floatingActionButton: _show
+        //     ? SizedBox(
+        //         height: 50.0,
+        //         child: FloatingActionButton(
+        //           onPressed: () {},
+        //           child: const Icon(Icons.add),
+        //           elevation: 4.0,
+        //           backgroundColor: const Color(0xFF337A6F),
+        //         ),
+        //       )
+        //     : const SizedBox(height: 0.0),
+        // bottomNavigationBar: BottomAppBar(
+        //   child: _show
+        //       ? Row(
+        //           mainAxisAlignment: MainAxisAlignment.center,
+        //           children: <Widget>[
+        //             Expanded(
+        //               child: IconButton(
+        //                 icon: const Icon(Icons.home),
+        //                 onPressed: () {},
+        //               ),
+        //             ),
+        //             Expanded(
+        //               child: IconButton(
+        //                 icon: const Icon(Icons.show_chart),
+        //                 onPressed: () {},
+        //               ),
+        //             ),
+        //             const Expanded(child: Text('')),
+        //             Expanded(
+        //               child: IconButton(
+        //                 icon: const Icon(Icons.tab),
+        //                 onPressed: () {},
+        //               ),
+        //             ),
+        //             Expanded(
+        //               child: IconButton(
+        //                 icon: const Icon(Icons.settings),
+        //                 onPressed: () {},
+        //               ),
+        //             ),
+        //           ],
+        //         )
+        //       : const SizedBox(height: 0.0),
+        // ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+        bottomNavigationBar:  _show? BottomNavigationBar(
+          elevation: 4.0,
+          // backgroundColor: const Color(0xFF337A6F),
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.call),
+              label: 'Items',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.camera),
+              label: 'Budget',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.chat),
+              label: 'Items',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+        ): const SizedBox(height: 0.0),
       ),
     );
   }
@@ -349,7 +382,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget allTab() => Stack(
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 58.0),
+            margin: const EdgeInsets.only(top: 98.0),
             child: ListView.builder(
                 controller: _scrollBottomBarController,
                 padding: const EdgeInsets.all(0.0),
@@ -367,103 +400,125 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: All(index: index));
                 }),
           ),
-          Card(
-            elevation: 4.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width / 1.4,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      // color: Colors.white,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: const Center(
-                    child: TextField(
-                      decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.search),
-                          // suffixIcon:
-                          //  IconButton(
-                          //   icon: const Icon(Icons.clear, color: Colors.grey),
-                          //   onPressed: () {
-                          //     /* Clear the search field */
-                          //   },
-                          // ),
-                          hintText: 'Search...',
-                          border: InputBorder.none),
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2.0),
+              child: SizedBox(height:100.0,
+                child: Card(
+                    elevation: 3.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(CupertinoIcons.add),
-                  color: Colors.grey,
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: const Icon(CupertinoIcons.barcode_viewfinder),
-                  color: Colors.grey,
-                  onPressed: () {
-                    var alertStyle = AlertStyle(
-                      // animationType: AnimationType.grow,
-                      // isCloseButton: false,
-                      isButtonVisible: false,
-                      isOverlayTapDismiss: false,
-                      descStyle: const TextStyle(fontWeight: FontWeight.bold),
-                      // descTextAlign: TextAlign.center,
-                      animationDuration: const Duration(milliseconds: 400),
-                      alertBorder: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                        side: const BorderSide(
-                          color: Colors.grey,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal:8.0, vertical: 8.0),
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const [
+                                Text('Stock value', style: TextStyle(fontSize:16.0),),
+                                Text('Tsh 8,000,000', style: TextStyle( fontSize:16.0),)
+                              ]),
                         ),
-                      ),
-                      // titleStyle: TextStyle(
-                      //   color: const Color(0xFF24564F),
-                      // ),
-                      alertAlignment: Alignment.center,
-                    );
-                    Alert(
-                      context: context,
-                      style: alertStyle,
-                      title: "Select Scan Type",
-                      content: Column(
-                        children: <Widget>[
-                          Container(
-                              alignment: Alignment.center,
-                              child: Flex(
-                                  direction: Axis.vertical,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    TextButton(
-                                        onPressed: () => scanQR(),
-                                        child: const Text('QR Scan',
-                                            style:
-                                                TextStyle(color: Colors.grey))),
-                                    TextButton(
-                                        onPressed: () => scanBarcodeNormal(),
-                                        child: const Text('Barcode Scan',
-                                            style:
-                                                TextStyle(color: Colors.grey))),
+                        Row(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width / 1.4,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                  // color: Colors.white,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: const Center(
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                      prefixIcon: Icon(Icons.search),
+                                      // suffixIcon:
+                                      //  IconButton(
+                                      //   icon: const Icon(Icons.clear, color: Colors.grey),
+                                      //   onPressed: () {
+                                      //     /* Clear the search field */
+                                      //   },
+                                      // ),
+                                      hintText: 'Search...',
+                                      border: InputBorder.none),
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              icon: const Icon(CupertinoIcons.add),
+                              color: Colors.grey,
+                              onPressed: () {},
+                            ),
+                            IconButton(
+                              icon: const Icon(CupertinoIcons.barcode_viewfinder),
+                              color: Colors.grey,
+                              onPressed: () {
+                                var alertStyle = AlertStyle(
+                                  // animationType: AnimationType.grow,
+                                  // isCloseButton: false,
+                                  isButtonVisible: false,
+                                  isOverlayTapDismiss: false,
+                                  descStyle: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                  // descTextAlign: TextAlign.center,
+                                  animationDuration:
+                                      const Duration(milliseconds: 400),
+                                  alertBorder: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                    side: const BorderSide(
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  // titleStyle: TextStyle(
+                                  //   color: const Color(0xFF24564F),
+                                  // ),
+                                  alertAlignment: Alignment.center,
+                                );
+                                Alert(
+                                  context: context,
+                                  style: alertStyle,
+                                  title: "Select Scan Type",
+                                  content: Column(
+                                    children: <Widget>[
+                                      Container(
+                                          alignment: Alignment.center,
+                                          child: Flex(
+                                              direction: Axis.vertical,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                TextButton(
+                                                    onPressed: () => scanQR(),
+                                                    child: const Text('QR Scan',
+                                                        style: TextStyle(
+                                                            color: Colors.grey))),
+                                                TextButton(
+                                                    onPressed: () =>
+                                                        scanBarcodeNormal(),
+                                                    child: const Text(
+                                                        'Barcode Scan',
+                                                        style: TextStyle(
+                                                            color: Colors.grey))),
 
-                                    TextButton(
-                                        onPressed: () =>
-                                            startBarcodeScanStream(),
-                                        child: const Text('Barcode Scan Stream',
-                                            style:
-                                                TextStyle(color: Colors.grey))),
-                                    // Text('Scan result : $_scanBarcode\n',
-                                    //     style: TextStyle(fontSize: 20))
-                                  ]))
-                        ],
-                      ),
-                    ).show();
-                  },
-                ),
-              ],
-            ),
-          ),
+                                                TextButton(
+                                                    onPressed: () =>
+                                                        startBarcodeScanStream(),
+                                                    child: const Text(
+                                                        'Barcode Scan Stream',
+                                                        style: TextStyle(
+                                                            color: Colors.grey))),
+                                                // Text('Scan result : $_scanBarcode\n',
+                                                //     style: TextStyle(fontSize: 20))
+                                              ]))
+                                    ],
+                                  ),
+                                ).show();
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    )),
+              )),
         ],
       );
 

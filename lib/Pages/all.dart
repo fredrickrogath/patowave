@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:patowave/Pages/tile-details.dart';
 
 class All extends StatefulWidget {
@@ -12,7 +12,7 @@ class All extends StatefulWidget {
 }
 
 class _AllState extends State<All> {
-  String _scanBarcode = 'Unknown';
+  // String _scanBarcode = 'Unknown';
 
   @override
   Widget build(BuildContext context) {
