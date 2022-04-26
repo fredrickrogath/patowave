@@ -118,7 +118,7 @@ class _TileDetailsState extends State<TileDetails> {
                           descStyle:
                               const TextStyle(fontWeight: FontWeight.bold),
                           // descTextAlign: TextAlign.center,
-                          animationDuration: const Duration(milliseconds: 400),
+                          animationDuration: const Duration(milliseconds: 100),
                           alertBorder: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16.0),
                             side: const BorderSide(
@@ -162,7 +162,11 @@ class _TileDetailsState extends State<TileDetails> {
                                               style: TextStyle(fontSize: 14.0)),
                                         ),
                                         GFButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.of(context,
+                                                    rootNavigator: true)
+                                                .pop();
+                                          },
                                           text: "Delete",
                                           shape: GFButtonShape.square,
                                           size: GFSize.MEDIUM,
