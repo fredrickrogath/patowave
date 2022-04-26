@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:patowave/Pages/tile-details.dart';
@@ -18,9 +19,9 @@ class _AllState extends State<All> {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => const TileDetails()),
-  );
+          context,
+          MaterialPageRoute(builder: (context) => const TileDetails()),
+        );
       },
       child: Card(
         elevation: 0.0,
@@ -30,17 +31,18 @@ class _AllState extends State<All> {
         child: ListTile(
             selectedTileColor: const Color(0xFF337A6F),
             leading: GestureDetector(
-              child: const CircleAvatar(
-                backgroundImage: AssetImage('assets/logo/logo2.jpg'),
-              ),
+              // child: const CircleAvatar(radius: 40.0,
+              //   backgroundImage: AssetImage('assets/logo/logo2.jpg'),
+              // ),
+              child: Image.asset('assets/logo/logo2.jpg'),
             ),
             title: const Text(
-              "Maembe",
+              "Blablablaah",
               overflow: TextOverflow.ellipsis,
               style: TextStyle(),
             ),
             subtitle: Padding(
-              padding: const EdgeInsets.only(top: 12.0),
+              padding: const EdgeInsets.only(top: 16.0),
               child: Row(children: [
                 const Text("Quantity  23",
                     style: TextStyle(
@@ -92,11 +94,11 @@ class _AllState extends State<All> {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Text(
                     'Tsh 13,000',
-                    style: TextStyle(color: Colors.green),
+                    style: TextStyle(color: Colors.green[500]),
                   ),
                 ),
                 5 == 9
@@ -137,18 +139,16 @@ class _AllState extends State<All> {
                         ],
                       ))
                     : SizedBox(
-                        height: MediaQuery.of(context).size.height / 30.0,
-                        child: FloatingActionButton.extended(
-                            elevation: 0.0,
-                            foregroundColor: Colors.white,
-                            backgroundColor: const Color(0xFF337A6F),
-                            onPressed: () {},
-                            label: Row(children: const [
-                              Text('Add to sale',
-                                  style: TextStyle(
-                                      fontSize: 13.0, color: Colors.white))
-                            ])),
-                      )
+                        height: MediaQuery.of(context).size.height / 25.0,
+                        child: IconButton(
+                          icon: Icon(
+                            CupertinoIcons.cart_badge_plus,
+                            size: 25.0,
+                            color: Colors.green[500],
+                          ),
+                          color: Colors.white,
+                          onPressed: () {},
+                        ))
               ],
             )),
       ),
@@ -156,26 +156,24 @@ class _AllState extends State<All> {
   }
 }
 
-
-
-  // Container(
-      //   width: double.infinity,
-      //   height: 40,
-      //   decoration: BoxDecoration(
-      //       color: Colors.white,
-      //       borderRadius: BorderRadius.circular(5)),
-      //   child: Center(
-      //     child: TextField(
-      //       decoration: InputDecoration(
-      //           prefixIcon: Icon(Icons.search),
-      //           suffixIcon: IconButton(
-      //             icon: Icon(Icons.clear),
-      //             onPressed: () {
-      //               /* Clear the search field */
-      //             },
-      //           ),
-      //           hintText: 'Search...',
-      //           border: InputBorder.none),
-      //     ),
-      //   ),
-      // ),
+// Container(
+//   width: double.infinity,
+//   height: 40,
+//   decoration: BoxDecoration(
+//       color: Colors.white,
+//       borderRadius: BorderRadius.circular(5)),
+//   child: Center(
+//     child: TextField(
+//       decoration: InputDecoration(
+//           prefixIcon: Icon(Icons.search),
+//           suffixIcon: IconButton(
+//             icon: Icon(Icons.clear),
+//             onPressed: () {
+//               /* Clear the search field */
+//             },
+//           ),
+//           hintText: 'Search...',
+//           border: InputBorder.none),
+//     ),
+//   ),
+// ),

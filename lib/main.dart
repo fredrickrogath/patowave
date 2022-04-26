@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:lazy_loading_list/lazy_loading_list.dart';
 
 void main() {
   runApp(const MyApp());
@@ -91,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   getdarkMode() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    darkNotifier.value = prefs.getBool('darkMode')?? false;
+    darkNotifier.value = prefs.getBool('darkMode') ?? false;
   }
 
   void showBottomBar() {
@@ -358,7 +359,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 cacheExtent: 50.0,
                 itemCount: 200,
                 itemBuilder: (context, index) {
-                  return All(index: index);
+                  return LazyLoadingList(
+                      initialSizeOfItems: 10,
+                      index: index,
+                      hasMore: true,
+                      loadMore: () => print('Loading More'),
+                      child: All(index: index));
                 }),
           ),
           Card(

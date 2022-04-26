@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:patowave/image-viewer/view-image.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class TileDetails extends StatefulWidget {
   const TileDetails({Key? key}) : super(key: key);
@@ -103,7 +104,46 @@ class _TileDetailsState extends State<TileDetails> {
                     IconButton(
                       color: Color(0XFFef233c),
                       icon: const Icon(CupertinoIcons.trash),
-                      onPressed: () {},
+                      onPressed: () {
+                        var alertStyle = AlertStyle(
+                        // animationType: AnimationType.grow,
+                        // isCloseButton: false,
+                        isButtonVisible: false,
+                        isOverlayTapDismiss: false,
+                        descStyle: const TextStyle(fontWeight: FontWeight.bold),
+                        // descTextAlign: TextAlign.center,
+                        animationDuration: const Duration(milliseconds: 400),
+                        alertBorder: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                          side: const BorderSide(
+                            color: Colors.grey,
+                          ),
+                        ),
+                        // titleStyle: TextStyle(
+                        //   color: const Color(0xFF24564F),
+                        // ),
+                        alertAlignment: Alignment.center,
+                      );
+                      Alert(
+                        context: context,
+                        style: alertStyle,
+                        title: "Alert",
+                        content: Column(
+                          children: <Widget>[
+                            Container(
+                                alignment: Alignment.center,
+                                child: Flex(
+                                    direction: Axis.vertical,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Text('Are sure you want to delete this item ?', style: TextStyle(fontSize: 17.0, )),
+                                      Text('Warning', style: TextStyle(color: Color(0XFFef233c), fontSize: 17.0)),
+                                      Text('All of these item information will be lost', style: TextStyle(fontSize: 17.0)),
+                                    ]))
+                          ],
+                        ),
+                      ).show();
+                      },
                     ),
                   ],
                 ),
