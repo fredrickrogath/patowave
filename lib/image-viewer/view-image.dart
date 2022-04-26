@@ -115,14 +115,12 @@ class ViewImage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(5.0),
-                          child: Container(
-                              // color: const Color(0xffF8742C),
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "Withdraw",
-                                    // style: TextStyle(color: Colors.red),
-                                  ))),
+                          child:  const Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Withdraw",
+                                // style: TextStyle(color: Colors.red),
+                              )),
                         ),
                       )
                     ],

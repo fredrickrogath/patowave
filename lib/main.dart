@@ -208,15 +208,15 @@ class _MyHomePageState extends State<MyHomePage> {
                     backgroundImage: AssetImage('assets/logo/logo2.jpg'),
                   ),
                 ),
-                flexibleSpace: FlexibleSpaceBar(
-                    centerTitle: true,
-                    background: Opacity(
-                      opacity: 0.2,
-                      child: Image.asset(
-                        'assets/logo/logo2.jpg',
-                        fit: BoxFit.cover,
-                      ),
-                    )),
+                // flexibleSpace: FlexibleSpaceBar(
+                //     centerTitle: true,
+                //     background: Opacity(
+                //       opacity: 0.2,
+                //       child: Image.asset(
+                //         'assets/logo/logo2.jpg',
+                //         fit: BoxFit.cover,
+                //       ),
+                //     )),
                 title: Text(
                   widget.title,
                   style: const TextStyle(fontSize: 16.0),
@@ -368,7 +368,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 }),
           ),
           Card(
-            elevation: 0.0,
+            elevation: 4.0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
@@ -380,16 +380,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   decoration: BoxDecoration(
                       // color: Colors.white,
                       borderRadius: BorderRadius.circular(5)),
-                  child: Center(
+                  child: const Center(
                     child: TextField(
                       decoration: InputDecoration(
                           prefixIcon: const Icon(Icons.search),
-                          suffixIcon: IconButton(
-                            icon: const Icon(Icons.clear, color: Colors.grey),
-                            onPressed: () {
-                              /* Clear the search field */
-                            },
-                          ),
+                          // suffixIcon:
+                          //  IconButton(
+                          //   icon: const Icon(Icons.clear, color: Colors.grey),
+                          //   onPressed: () {
+                          //     /* Clear the search field */
+                          //   },
+                          // ),
                           hintText: 'Search...',
                           border: InputBorder.none),
                     ),

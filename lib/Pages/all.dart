@@ -24,7 +24,7 @@ class _AllState extends State<All> {
         );
       },
       child: Card(
-        elevation: 0.0,
+        elevation: 2.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.0),
         ),
